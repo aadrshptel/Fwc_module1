@@ -1,0 +1,169 @@
+
+\documentclass[journal,11pt]{IEEEtran}
+\usepackage{tabularx}
+\usepackage{tikz}
+\begin{document}
+\title{AVR-GCC Assignment}
+\author{\textbf{Adarsh kumar (FWC2022068)}}
+\maketitle
+\begin{abstract}
+This manual will explain how to design a 4-Bit Synchronous Counter Using AVR-GCC and Display it on LCD Display.
+\end{abstract}
+\IEEEpeerreviewmaketitle
+\section{\textbf{Components Needed}}
+\begin{tabularx}{0.6\textwidth} {  
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X |}
+  \hline
+\textbf{Component} &  \textbf{Value} & \textbf{Quantity}\\
+\hline
+Arduino & Uno & 1 \\  
+\hline
+Bread board & - & 1 \\
+\hline
+Jumper wires & M-M & 20\\
+\hline
+Liquid Crystal Display & - & 1\\
+\hline
+
+\end{tabularx}
+\section{\textbf{Liquid Crystal Display layout}}
+\begin{tikzpicture}[scale=1,
+     pin/.style={draw,rectangle,minimum width=2em,font=\small}
+     ]
+%   \clip (18,.5) rectangle (5,2);           
+%Vertices of the main display rectangle
+\def \xmin{1}
+\def \xmax{16}
+\def \ymin{0}
+\def \ymax{6}
+
+%Number of pins on a side
+\def \n{8}
+\def \k{1.6}
+
+%Draw the display rectangle
+
+
+%Define height of pins and their separation
+\def \height{2}
+\pgfmathsetmacro{\centx}{(\xmax+\xmin)/2}
+\pgfmathsetmacro{\centy}{(\ymax+\ymin)/2}
+\pgfmathsetmacro{\wid}{(\xmax-\xmin)/(\n-1)}
+
+
+\draw ({\xmin-0.5*\wid},\ymin)rectangle ({\xmax+0.5*\wid},\ymax);
+%\node (G) at (\centx,\centy) [draw,thick,minimum width=12.6cm,minimum height=4.8] {};
+
+
+%Putting text 7447 at the centre
+   \node at (\centx,\centy) {\textbf{\LARGE{LCD $ 16  \times 2$}}};
+%   \node at (-1,0) {\textbf{$1$}};
+%    \node at (14,0) {\textbf{$16$}};
+
+      
+\foreach [count=\i] \k in {}
+   {
+\pgfmathsetmacro{\j}{int(round(17-\i)}
+
+            \node (\i) at ( {\xmin+(\i-1)*\wid},{\ymax+0.45*\wid}) {\LARGE \k} ;
+   }
+
+\foreach [count=\i] \k in {}
+{
+            \node (\i) at ( {\xmin+(\i-1)*\wid},{\ymin-0.45*\wid}) {\LARGE \k} ;              
+ }
+\node(G) at (1,0){};
+\foreach \x in {1,...,16}
+\node[above=2pt] at (\x,0) {\x};
+% \node(G)[rectangle,fill=red!5,draw=red,text width=5cm]{};
+%\node(Vcc)[below of=G]{Vcc};
+\node(GND)[below of=G]{GND};
+\node(Vcc)[right of=GND]{Vcc};
+\node(Vee)[right of=Vcc]{Vee};
+\node(RS)[right of=Vee]{RS};
+\node(RW)[right of=RS]{RW};
+\node(EN)[right of=RW]{EN};
+\node(DB0)[right of=EN]{DB0};
+\node(DB1)[right of=DB0]{DB1};
+\node(DB2)[right of=DB1]{DB2};
+\node(DB3)[right of=DB2]{DB3};
+\node(DB4)[right of=DB3]{DB4};
+\node(DB5)[right of=DB4]{DB5};
+\node(DB6)[right of=DB5]{DB6};
+\node(DB7)[right of=DB6]{DB7};
+\node(LED+)[right of=DB7]{LED+};
+\node(LED-)[right of=LED+]{LED-};
+\draw[-](G.south)-|(GND.north);
+\draw[-](G.south)-|(Vcc.north);
+\draw[-](G.south)-|(Vee.north);
+\draw[-](G.south)-|(RS.north);
+\draw[-](G.south)-|(RW.north);
+\draw[-](G.south)-|(EN.north);
+\draw[-](G.south)-|(DB0.north);
+\draw[-](G.south)-|(DB1.north);
+\draw[-](G.south)-|(DB2.north);
+\draw[-](G.south)-|(DB3.north);
+\draw[-](G.south)-|(DB4.north);
+\draw[-](G.south)-|(DB5.north);
+\draw[-](G.south)-|(DB6.north);
+\draw[-](G.south)-|(DB7.north);
+\draw[-](G.south)-|(LED+.north);
+\draw[-](G.south)-|(LED-.north);
+\end{tikzpicture}
+
+
+\section{\textbf{Steps to be followed:}}
+\textbf{Step 1:} Plug the LCD Display on the Breadboard.
+\hfill
+\hfill
+\break
+\textbf{Step 2:} Connect the LCD Display And Arduino as per the table given below.
+\hfill \break
+\textbf{Step 3:} Download the code from the link given below.
+\hfill \break
+svn co https://raw.githubusercontent.com/aadrshptel/Fwcmodule1
+/main/Assignments/AVRGCC/codes/counter.c
+\hfill \break
+\textbf{Step 4:}  download the files in the above link and move to the
+working directory in the termux and run the command
+”MAKE”
+\subsection{\textbf{To generate PDF file}}
+\textbf{Step :1} Type pdflatex followed by the file name.
+\clearpage
+\newpage
+\section{\textbf{Arduino And LCD DIsplay Connection}}
+\begin{tabularx}{0.6\textwidth} {  
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X |}
+  \hline
+\textbf{Arduino Pins} &  \textbf{LCD Pins} & \textbf{LCD Pins Label}\\
+\hline
+GND & 1 & GND \\  
+\hline
+5V & 2 & Vcc \\
+\hline
+GND & 3 & Vee\\
+\hline
+D8 & 4 & RS\\
+\hline
+GND & 5 & R/W \\  
+\hline
+D9 & 6 & EN \\
+\hline
+D10 & 11 & DB4\\
+\hline
+D11& 12& DB15\\
+\hline
+D12& 13 & DB6 \\  
+\hline
+D13 & 14 & DB7 \\
+\hline
+5V & 15 & LED+ \\
+\hline
+GND & 16 & LED-\\
+\hline
+\end{tabularx}
+\end{document}
