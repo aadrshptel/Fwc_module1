@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import subprocess
+import shlex
 #defining function
 #assuming a is 2
 def f(x):
@@ -53,4 +54,5 @@ plt.ylabel("y-axis")
 plt.grid()
 plt.legend()
 plt.savefig('op1.png')
+#subprocess.run(shlex.split("termux-open /sdcard/adarsh/op1.png"))
 plt.show()
